@@ -8,6 +8,20 @@ def initConnection(keyspace, addresses=[ADDRESSES,], port=9042):
     print("Connected successfully !")
     return session
 
+
+# marketplace: <class 'str'>
+# customer_id: <class 'int'>
+# product_id: <class 'str'>
+# product_parent: <class 'int'>
+# product_title: <class 'str'>
+# product_category: <class 'str'>
+# star_rating: <class 'int'>
+# helpful_votes: <class 'int'>
+# total_votes: <class 'int'>
+# verified_purchase: <class 'str'>
+# review_headline: <class 'str'>
+# review_body:<class 'str'>
+# review_date:<class 'str'>
 def initDatabase(keyspace="amazon"):
     session = initConnection(keyspace)
     session.execute("CREATE TABLE IF NOT EXISTS reviews_by_id (\
@@ -15,7 +29,7 @@ def initDatabase(keyspace="amazon"):
         customer_id int,\
         review_id text,\
         product_id text,\
-        product_parent text,\
+        product_parent int,\
         product_title text,\
         product_category text, \
         star_rating int,\
@@ -24,11 +38,12 @@ def initDatabase(keyspace="amazon"):
         verified_purchase text,\
         review_headline text,\
         review_body text,\
-        review_date text,\
+        review_date date,\
         PRIMARY KEY (review_id)\
     );")
-    print("creating database table [reviews]")
+    print("created database table [reviews] at keyspace:[" + keyspace + "]!")
     session.shutdown()
+    return keyspace
 
 def main():
     pass
