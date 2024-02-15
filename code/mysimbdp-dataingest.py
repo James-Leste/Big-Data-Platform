@@ -27,7 +27,7 @@ def getColumnNames(filepath, delimiter='\t'):
     reader.close()
     return arr
 
-def injesting(filepath, address, port, batchsize=3, delimiter="\t"):
+def ingesting(filepath, address, port, batchsize=3, delimiter="\t"):
     initDatabase("test", addresses=address, port=port)
     session = initConnection("test", addresses=address, port=port)
     insert_stmt = session.prepare(INSERT)
@@ -71,7 +71,7 @@ def injesting(filepath, address, port, batchsize=3, delimiter="\t"):
     session.shutdown()
 
 def main():
-    injesting(FILEPATH2, address=["35.204.192.40",], port=9042)
+    ingesting(FILEPATH2, address=["35.204.192.40",], port=9042)
     #print(getColumnNames(FILEPATH1))
     
 
