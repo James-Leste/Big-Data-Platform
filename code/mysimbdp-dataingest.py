@@ -53,14 +53,16 @@ def injesting(file, address, port, batchsize=3, delimiter="\t"):
                     logging.error(f"Problematic data: {s.to_dict()}")
                     logging.info("-----------------")
                     continue  # Skip the current row and continue with the next one
-            #session.execute(batch)
-            #batch.clear()
     except StopIteration:
         logging.info("Reached end of file.")
         logging.info("-----------------")
+        print("Reached end of file.")
+        print("-----------------")
     finally:
         logging.info(f"Total {total} records added successfully.")
         logging.info("-----------------")
+        print(f"Total {total} records added successfully.")
+        print("-----------------")
     session.shutdown()
 
 def main():
