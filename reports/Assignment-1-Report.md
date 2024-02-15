@@ -232,6 +232,67 @@ RuntimeError: cannot schedule new futures after shutdown
 - Schema Evolution: Changes to the data structure or schema over time, including additions, deletions, or modifications of fields.
 - Data Destination: Information about where the data is stored within `mysimbdp-coredms`, such as database names, table names, and dataset identifiers.
 
+### 2. Data Schema for Publication
+
+ Using the tenant/user identifier as the root key for each entry ensures that the mysimbdp-coredms instance associated with a particular tenant can be quickly located. Organizing instance information and metadata as sub-keys under each tenant/user identifier keeps the structure organized and scalable, allowing for easy addition of new information or instances.
+
+```shell
+/mysimbdp-coredms/
+    /tenant1/
+        instance_id: "instance1"
+        host: "coredms1.example.com"
+        port: "9042"
+        metadata:
+            version: "1.0"
+            deployment_date: "2024-02-01T10:00:00Z"
+            service_status: "Active"
+        security:
+            api_key: "abc123"
+            encryption: "TLSv1.2"
+    /tenant2/
+        instance_id: "instance2"
+        host: "coredms2.example.com"
+        port: "9042"
+        metadata:
+            version: "1.0"
+            deployment_date: "2024-03-01T10:00:00Z"
+            service_status: "Active"
+        security:
+            api_key: "def456"
+            encryption: "TLSv1.2"
+```
+
+### 3. Integrating A Service Discovery Feature
+
+#### Choose a Service Discovery Tool
+
+ZooKeeper: Often used with Kafka, Hadoop, etc., for service coordination and metadata storage.
+
+#### Register `mysimbdp-coredms` Instances
+
+Each instance of `mysimbdp-coredms` must register itself with the chosen service discovery tool upon startup. Example of creating a znode in ZooKeeper:
+
+```java
+CuratorFramework client = CuratorFrameworkFactory.newClient(zookeeperConnectionString, new ExponentialBackoffRetry(1000, 3));
+client.start();
+
+String servicePath = "/mysimbdp-coredms/mysimbdp-coredms1";
+byte[] serviceData = "{\"address\": \"34.32.201.110\", \"port\": 9042}".getBytes();
+
+// Create an ephemeral znode for the service instance
+client.create().withMode(CreateMode.EPHEMERAL).forPath(servicePath, serviceData);
+```
+
+#### Implement Service Discovery in `mysimbdp-dataingest`
+
+Modify `mysimbdp-dataingest` to query the service discovery tool for active mysimbdp-coredms instances instead of using static configurations.
+
+#### Handle Service Changes Dynamically
+
+Periodically re-query the service discovery tool to get updated lists of `mysimbdp-coredms` instances.
+
+### 4. 
+
 ## Source code structure
 
 - `cassandra-compose.yml`: contains cassandra cluster docker image configuration.
