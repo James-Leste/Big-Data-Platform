@@ -1,2 +1,4 @@
 .DS_Store
 /test
+*/__pycache__
+data_ingestion_errors.log
