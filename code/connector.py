@@ -18,6 +18,7 @@ def initConnection(keyspace, addresses=[ADDRESSES,], port=9042):
 # star_rating: <class 'int'>
 # helpful_votes: <class 'int'>
 # total_votes: <class 'int'>
+# vine: <class 'int'>
 # verified_purchase: <class 'str'>
 # review_headline: <class 'str'>
 # review_body:<class 'str'>
