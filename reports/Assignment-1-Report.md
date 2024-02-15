@@ -173,6 +173,17 @@ In table `reviews_by_customer_id`
 - `product_id` is the partition key, which means that all reviews for a specific product will be stored together on the same node, enhancing the performance of queries that retrieve all reviews for a particular product.  
 - `review_id` is the clustering column, which ensures that within a partition, reviews are sorted by their UUIDs. This can be useful for querying the latest or oldest reviews for a product.
 
+### 3. Data Ingestion
+
+Run `/code/mysimbdp-dataingest.py` to ingest the data to the Cassandra cluster which is running locally or on a Google Cloud VM. Atomic data element/unit for ingesting is a datarow.  
+In Cassandra, consistency levels determine the number of replicas on which a write operation must be acknowledged before considering the operation successful. When using Cassandra within Docker, the consistency options for writing data remain the same as in any standard Cassandra deployment.
+
+#### Consistency Options
+
+- `QUORUM`: The write must be acknowledged by a majority of the replica nodes in the cluster
+- `LOCAL_QUORUM`: The write must be acknowledged by a majority of the nodes in the local datacenter.
+- `EACH_QUORUM`: The write must be acknowledged by a quorum of the nodes in each datacenter.
+
 
 ## Source code structure
 
