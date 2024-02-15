@@ -46,7 +46,7 @@ services:
         expose: *exposes
         environment: 
             <<: *cassandras
-            CASSANDRA_DC: DC1
+            CASSANDRA_DC: DC2
         ports:
             - "9044:9042"
         depends_on: 
