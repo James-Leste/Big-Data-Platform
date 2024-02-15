@@ -73,10 +73,106 @@ review_body: <class 'str'>
 review_date: <class 'str'>
 ```
 
+### 2. Platform Architecture & Data Ingestion explain
+
+### 3. Cluster configuration
+
+You can inspect the configuration file [here](https://github.com/James-Leste/Big-Data-Platform-2024/blob/main/code/cassandra-compose.yml). The cluster consists of 3 cassandra nodes. node2 and node3 will always restart when node1 is healthy. If one node dies, other nodes still have the data that can be accessed.  
+Ways to prevent SPof
+
+1. To prevent SPoF, nodes should be distributed across multiple data centers. This distribution ensures that even if one data center goes down, the others can continue to serve requests.  
+
+2. The configuration uses a `service_healthy` condition for `depends_on`, which is good for ensuring that dependent services wait for the Cassandra node to be fully up and healthy before starting.
 
 
+### 4. 
+
+Replication Factor: A common choice for replication factor in a production environment is three. This means each piece of data is stored on three different nodes. This level of replication provides a good balance between redundancy (for fault tolerance) and resource usage.
+
+Number of Nodes: With a replication factor of three, you would need at least three nodes to ensure that each piece of data is stored on a different node. However, to truly safeguard against a single-point-of-failure and allow for maintenance or unexpected outages without losing data availability, it's advisable to have more than three nodes. For instance, having at least three nodes per data center if using multiple data centers would be a good start.
+
+Considerations for Node Failure: With a replication factor of three, the cluster can tolerate the failure of up to two nodes (in the simplest case where data is evenly distributed and no more than one replica of any data piece is on the failing nodes) before data becomes inaccessible. However, the actual tolerance to node failures can be more complex and depends on factors such as data distribution, consistency levels in use, and specific queries being executed.
+
+#### 5. 
 
 ## Implementation
+
+### 1. Data Schema
+
+The data only have one structure. Two schema were designed to achieve different businees requirements.
+
+#### Queries by `review_id`
+
+```sql
+CREATE TABLE IF NOT EXISTS reviews_by_id (
+    marketplace text,
+    customer_id int,
+    review_id text,
+    product_id text,
+    product_parent int,
+    product_title text,
+    product_category text,
+    star_rating int,
+    helpful_votes int,
+    total_votes int,
+    vine text,
+    verified_purchase text,
+    review_headline text,
+    review_body text,
+    review_date date,
+    PRIMARY KEY (review_id)
+);
+```
+
+#### Queries by `customer_id`
+
+In this table, `customer_id` is the partition key, and `review_id` is the clustering column. This setup allows users to query all reviews by a specific customer and orders them by review_id.
+
+```sql
+CREATE TABLE reviews_by_customer_id (
+    customer_id INT,
+    review_id TEXT,
+    marketplace TEXT,
+    product_id TEXT,
+    product_parent INT,
+    product_title TEXT,
+    product_category TEXT,
+    star_rating INT,
+    helpful_votes INT,
+    total_votes INT,
+    vine INT,
+    verified_purchase TEXT,
+    review_headline TEXT,
+    review_body TEXT,
+    review_date DATE,
+    PRIMARY KEY (customer_id, review_id)
+) WITH CLUSTERING ORDER BY (review_id DESC);
+```
+
+### 2. Partition and Clustering Strategies
+
+#### Keyspace definition
+
+The NetworkTopologyStrategy is chosen for multi-datacenter environments because it allows specifying the number of replicas in each datacenter.
+
+```sql
+CREATE KEYSPACE reviews_keyspace 
+    WITH REPLICATION = {
+        'class' : 'NetworkTopologyStrategy',
+        'DC1' : 2,
+        'DC2' : 1
+};
+```
+
+However, with only three nodes across two datacenters, full fault tolerance can't be achieved for both datacenters if one datacenter completely fails. This would be addressed when I have more computing resources.
+
+#### Data Partitioning and Table Design
+
+In table `reviews_by_customer_id`
+
+- `product_id` is the partition key, which means that all reviews for a specific product will be stored together on the same node, enhancing the performance of queries that retrieve all reviews for a particular product.  
+- `review_id` is the clustering column, which ensures that within a partition, reviews are sorted by their UUIDs. This can be useful for querying the latest or oldest reviews for a product.
+
 
 ## Source code structure
 
