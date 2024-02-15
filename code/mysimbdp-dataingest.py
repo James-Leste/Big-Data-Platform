@@ -4,6 +4,7 @@ from connector import initConnection, initDatabase
 # from cassandra import ConsistencyLevel
 # from cassandra.policies import FallthroughRetryPolicy
 import logging
+from cassandra.query import UNSET_VALUE
 # from datetime import datetime
 
 FILEPATH1 = "/Users/jamesroot/AAAroot/Course notes/Aalto Big Data Platforms/assignment-1-101699682/test/amazon_reviews_us_Digital_Software_v1_00.tsv"
@@ -14,36 +15,37 @@ INSERT = "INSERT INTO reviews_by_id \
         (marketplace, customer_id, review_id, \
         product_id, product_parent, product_title, \
         product_category, star_rating, helpful_votes, \
-        total_votes, verified_purchase, review_headline, \
-        review_body, review_date) \
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
+        total_votes, vine, verified_purchase, \
+        review_headline, review_body, review_date) \
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
 
 logging.basicConfig(filename='data_ingestion_errors.log', level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s')
 
 def getColumnNames(filepath, delimiter='\t'):
     reader = pd.read_csv(filepath, chunksize=1, delimiter=delimiter)
-    return next(reader).columns.array
+    arr = next(reader).columns.array
+    reader.close()
+    return arr
 
 def injesting(filepath, address, port, batchsize=3, delimiter="\t"):
     initDatabase("test", addresses=address, port=port)
     session = initConnection("test", addresses=address, port=port)
     insert_stmt = session.prepare(INSERT)
+    columns = getColumnNames(filepath)
     reader = pd.read_csv(filepath, chunksize=batchsize, delimiter=delimiter)
     #batch = BatchStatement(consistency_level=ConsistencyLevel.QUORUM, retry_policy=FallthroughRetryPolicy())
-
     total = 0
     try:
         while True:
             df = next(reader)
             for i, s in df.iterrows():
                 try:
-                    session.execute_async(insert_stmt, [s.get("marketplace"), s.get("customer_id"), 
-                                                s.get("review_id"), s.get("product_id"),
-                                                s.get("product_parent"), s.get("product_title"), 
-                                                s.get("product_category"), s.get("star_rating"), 
-                                                s.get("helpful_votes"), s.get("total_votes"), 
-                                                s.get("verified_purchase"), s.get("review_headline"), 
-                                                s.get("review_body"), s.get("review_date")])
+                    paraList = []
+                    for n in columns:
+                        paraList.append(UNSET_VALUE) if str(s.get(n)) == "nan"\
+                            else paraList.append(s.get(n))
+                        
+                    session.execute_async(insert_stmt, paraList)
                     total += 1
                 except AttributeError as e:
                     # Log the error and the problematic row for review
