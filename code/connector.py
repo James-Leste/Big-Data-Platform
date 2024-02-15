@@ -35,6 +35,7 @@ def initDatabase(keyspace="amazon", addresses=ADDRESSES, port=PORT):
         star_rating int,\
         helpful_votes int,\
         total_votes int,\
+        vine text,\
         verified_purchase text,\
         review_headline text,\
         review_body text,\
