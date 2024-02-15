@@ -73,7 +73,7 @@ review_body: <class 'str'>
 review_date: <class 'str'>
 ```
 
-### 2. Platform Architecture & Data Ingestion explain
+### 2. Platform Architecture & Data Ingestion Explain
 
 ### 3. Cluster configuration
 
@@ -198,7 +198,39 @@ graph TD
     tenClients3Node --> tc3nResponseTime(Response Time: 4000+ ms<br>Consistency: QUORUM)
 ```
 
-### 5. 
+### 5. Problems When Pushing Large Data
+
+#### Data Type Inconsistency
+
+There are data rows contains value `nan` and was recognized as `float` causing `TypeError: 'float' object has no attribute 'encode'` error.
+
+```shell
+{'marketplace': 'US', 'customer_id': 24374381, 'review_id': 'R3R8VL58CZ870M', 'product_id': 'B00IX1I3G6', 'product_parent': 926539283, 'product_title': 'Amazon.com Gift Card Balance Reload', 'product_category': 'Gift Card', 'star_rating': 5, 'helpful_votes': 1, 'total_votes': 1, 'vine': 'N', 'verified_purchase': 'Y', 'review_headline': nan, 'review_body': "There's nothing to review. It's a balance loading.....", 'review_date': '2014-11-23'}
+```
+
+#### Thread Manager Error
+
+The platform lacks ability to recover from errors, hence error handling is significant.
+
+```shell
+Exception in thread Task Scheduler:
+Traceback (most recent call last):
+  File "/Users/jamesroot/miniconda3/envs/cassandra/lib/python3.9/threading.py", line 980, in _bootstrap_inner
+    self.run()
+  File "cassandra/cluster.py", line 4239, in cassandra.cluster._Scheduler.run
+  File "/Users/jamesroot/miniconda3/envs/cassandra/lib/python3.9/concurrent/futures/thread.py", line 167, in submit
+    raise RuntimeError('cannot schedule new futures after shutdown')
+RuntimeError: cannot schedule new futures after shutdown
+```
+
+## Extension
+
+### 1. Types of Metadata for Data Lineage
+
+- Access and Usage: Information on which users or applications accessed or modified the data, including timestamps of access and the nature of the access (read, write, update).
+- Transformation Metadata: Any transformations, filters, or aggregations applied to the data post-ingestion, including transformation logic (e.g., SQL queries, script names), execution times, and transformation tool versions.
+- Schema Evolution: Changes to the data structure or schema over time, including additions, deletions, or modifications of fields.
+- Data Destination: Information about where the data is stored within `mysimbdp-coredms`, such as database names, table names, and dataset identifiers.
 
 ## Source code structure
 
