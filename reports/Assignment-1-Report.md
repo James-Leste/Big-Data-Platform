@@ -184,6 +184,21 @@ In Cassandra, consistency levels determine the number of replicas on which a wri
 - `LOCAL_QUORUM`: The write must be acknowledged by a majority of the nodes in the local datacenter.
 - `EACH_QUORUM`: The write must be acknowledged by a quorum of the nodes in each datacenter.
 
+### 4. Response Time Comparison
+
+```mermaid
+graph TD
+    start(Start) --> singleClient{Single Client<br>3-Node Cluster}
+    start --> fiveClients{5 Concurrent Clients<br>3-Node Cluster}
+    start --> tenClients3Node{10 Concurrent Clients<br>3-Node Cluster}
+    
+
+    singleClient --> scResponseTime(Response Time: 642 ms<br>Consistency: QUORUM)
+    fiveClients --> fcResponseTime(Response Time: 3000+ ms<br>Consistency: QUORUM)
+    tenClients3Node --> tc3nResponseTime(Response Time: 4000+ ms<br>Consistency: QUORUM)
+```
+
+### 5. 
 
 ## Source code structure
 
