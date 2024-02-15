@@ -84,12 +84,11 @@ Ways to prevent SPof
 
 2. The configuration uses a `service_healthy` condition for `depends_on`, which is good for ensuring that dependent services wait for the Cassandra node to be fully up and healthy before starting.
 
-
 ### 4. 
 
 Replication Factor: A common choice for replication factor in a production environment is three. This means each piece of data is stored on three different nodes. This level of replication provides a good balance between redundancy (for fault tolerance) and resource usage.
 
-Number of Nodes: With a replication factor of three, you would need at least three nodes to ensure that each piece of data is stored on a different node. However, to truly safeguard against a single-point-of-failure and allow for maintenance or unexpected outages without losing data availability, it's advisable to have more than three nodes. For instance, having at least three nodes per data center if using multiple data centers would be a good start.
+Number of Nodes: With a replication factor of three, at least three nodes are needed to ensure that each piece of data is stored on a different node. However, to truly safeguard against a single-point-of-failure and allow for maintenance or unexpected outages without losing data availability, it's advisable to have more than three nodes. For instance, having at least three nodes per data center if using multiple data centers would be a good start.
 
 Considerations for Node Failure: With a replication factor of three, the cluster can tolerate the failure of up to two nodes (in the simplest case where data is evenly distributed and no more than one replica of any data piece is on the failing nodes) before data becomes inaccessible. However, the actual tolerance to node failures can be more complex and depends on factors such as data distribution, consistency levels in use, and specific queries being executed.
 
@@ -291,11 +290,31 @@ Modify `mysimbdp-dataingest` to query the service discovery tool for active mysi
 
 Periodically re-query the service discovery tool to get updated lists of `mysimbdp-coredms` instances.
 
-### 4. 
+### 4. `mysimbdp-daas` Design
 
-## Source code structure
+#### Define the API Interface for mysimbdp-daas
 
-- `cassandra-compose.yml`: contains cassandra cluster docker image configuration.
-- `connector.py`: contains `createKeyspace()`, `initDatabase()` and `initinitConnection()` functions for database connection.
-- `mysimbdp-dataingest.py`: contains `ingesting()` for data ingestion.
-- `requirements.txt`: contains python package requirements.
+CRUD, RESTful API
+
+#### Authenticate and Authorize mysimbdp-dataingest
+
+mysimbdp-dataingest will need to authenticate with mysimbdp-daas to perform operations.
+
+#### Update mysimbdp-dataingest to Use mysimbdp-daas APIs
+
+Refactoring data ingestion logic to construct API requests. Handling responses from `mysimbdp-daas`, including success, failure, and error responses. Implementing error handling and retry logic for failed API calls.
+
+#### Implement Data Formatting and Validation
+
+Ensure that mysimbdp-dataingest formats and validates data according to the requirements of `mysimbdp-daas`'s API.
+
+### 5. Hot Data VS Cold Data
+
+#### Constraints
+
+- Hot Space: Data that has been created or modified in the last 30 days is considered "active" and should be stored in the hot space for quick access.
+- Cold Space: Data older than 30 days is considered "inactive" and can be moved to cold storage.
+
+#### Example Workflow of Movement
+
+Query Cassandra for records older than 30 days. For each record found, insert it into an S3 bucket designated for cold storage, possibly using a compressed or serialized format to save space. Verify each record's successful transfer to S3. Delete the records from Cassandra only after successful verification.
