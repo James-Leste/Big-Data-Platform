@@ -22,8 +22,8 @@ def initConnection(keyspace, addresses=[ADDRESSES,], port=9042):
 # review_headline: <class 'str'>
 # review_body:<class 'str'>
 # review_date:<class 'str'>
-def initDatabase(keyspace="amazon"):
-    session = initConnection(keyspace)
+def initDatabase(keyspace="amazon", addresses=ADDRESSES, port=PORT):
+    session = initConnection(keyspace, addresses, port=port)
     session.execute("CREATE TABLE IF NOT EXISTS reviews_by_id (\
         marketplace text,\
         customer_id int,\
