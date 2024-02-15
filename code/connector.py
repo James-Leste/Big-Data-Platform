@@ -1,10 +1,22 @@
 from cassandra.cluster import Cluster
-ADDRESSES = "127.0.0.1"
+ADDRESS = "127.0.0.1"
 PORT = 9042
-def initConnection(keyspace, addresses=[ADDRESSES,], port=9042):
+
+def createKeyspace(session, keyspace):
+    session.execute("CREATE KEYSPACE IF NOT EXISTS "+ str(keyspace) +" \
+        WITH REPLICATION = {\
+        'class' : 'SimpleStrategy',\
+        'replication_factor' : 3\
+        };")
+    print("Created keyspace: " + str(keyspace))
+    return keyspace
+
+def initConnection(keyspace, addresses=[ADDRESS,], port=9042):
     cluster = Cluster(addresses, port=port)
-    session = cluster.connect(keyspace=keyspace)
-    print("Connecting...")
+    print("Connecting to port " + str(port))
+    session = cluster.connect()
+    createKeyspace(session, keyspace)
+    session.set_keyspace(keyspace)
     print("Connected successfully !")
     return session
 
@@ -23,7 +35,7 @@ def initConnection(keyspace, addresses=[ADDRESSES,], port=9042):
 # review_headline: <class 'str'>
 # review_body:<class 'str'>
 # review_date:<class 'str'>
-def initDatabase(keyspace="amazon", addresses=ADDRESSES, port=PORT):
+def initDatabase(keyspace="amazon", addresses=ADDRESS, port=PORT):
     session = initConnection(keyspace, addresses, port=port)
     session.execute("CREATE TABLE IF NOT EXISTS reviews_by_id (\
         marketplace text,\
@@ -48,7 +60,7 @@ def initDatabase(keyspace="amazon", addresses=ADDRESSES, port=PORT):
     return keyspace
 
 def main():
-    pass
+    print(initConnection(keyspace="test", addresses=["34.32.201.110",], port=9042))
     
 if __name__ == "__main__":
     main()
