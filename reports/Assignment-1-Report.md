@@ -6,17 +6,17 @@
 
 #### Selections
 
-For this project, <a href="https://www.kaggle.com/datasets/cynthiarempel/amazon-us-customer-reviews-dataset">Amazon Customer Reviews</a> and <a href="https://cassandra.apache.org/">Cassandra</a> are selected.  
+For this project, [Amazon Customer Reviews](https://www.kaggle.com/datasets/cynthiarempel/amazon-us-customer-reviews-dataset) and [Cassandra](https://cassandra.apache.org/) are selected.  
 
 #### Cassandra
 
-> Apache Cassandra is a database that focuses on reliable performance, speed and scalability. It quickly stores massive amounts of incoming data and can handle hundreds of thousands of writes per second. <a href="https://ubuntu.com/blog/apache-cassandra-top-benefits">source</a>
+> Apache Cassandra is a database that focuses on reliable performance, speed and scalability. It quickly stores massive amounts of incoming data and can handle hundreds of thousands of writes per second. [source](https://ubuntu.com/blog/apache-cassandra-top-benefits)
 
 #### Amazon Customer Reviews
 
 Data structure can be inspected in `data.tsv` in `/data` folder.
 
-> Amazon Customer Reviews (a.k.a. Product Reviews) is one of Amazon’s iconic products. In a period of over two decades since the first review in 1995, millions of Amazon customers have contributed over a hundred million reviews to express opinions and describe their experiences regarding products on the Amazon.com website. This makes Amazon Customer Reviews a rich source of information for academic researchers in the fields of Natural Language Processing (NLP), Information Retrieval (IR), and Machine Learning (ML), amongst others. <a href="https://www.kaggle.com/datasets/cynthiarempel/amazon-us-customer-reviews-dataset">source</a>
+> Amazon Customer Reviews (a.k.a. Product Reviews) is one of Amazon’s iconic products. In a period of over two decades since the first review in 1995, millions of Amazon customers have contributed over a hundred million reviews to express opinions and describe their experiences regarding products on the Amazon.com website. This makes Amazon Customer Reviews a rich source of information for academic researchers in the fields of Natural Language Processing (NLP), Information Retrieval (IR), and Machine Learning (ML), amongst others. [source](https://www.kaggle.com/datasets/cynthiarempel/amazon-us-customer-reviews-dataset)
 
 Dataset directory structure:
 
