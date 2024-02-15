@@ -103,6 +103,8 @@ amazon comments
 └── [3.9G]  amazon_reviews_us_Wireless_v1_00.tsv
 ```
 
+Data structure (see `data.tsv` in `/data` folder)
+
 - Change the IP address, port and keyspace in `mysimbdp-dataingest.py`
 - Change the FILEPATH into real path
 - Run `python3 mysimbdp-dataingest`
