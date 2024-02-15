@@ -5,8 +5,9 @@ PORT = 9042
 def createKeyspace(session, keyspace):
     session.execute("CREATE KEYSPACE IF NOT EXISTS "+ str(keyspace) +" \
         WITH REPLICATION = {\
-        'class' : 'SimpleStrategy',\
-        'replication_factor' : 3\
+        'class' : 'NetworkTopologyStrategy',\
+        'DC1' : 2, \
+        'DC2' : 1\
         };")
     print("Created keyspace: " + str(keyspace))
     return keyspace
