@@ -20,12 +20,15 @@ INSERT = "INSERT INTO reviews_by_id \
 
 logging.basicConfig(filename='data_ingestion_errors.log', level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s')
 
+def getColumnNames(filepath, delimiter='\t'):
+    reader = pd.read_csv(filepath, chunksize=1, delimiter=delimiter)
+    return next(reader).columns.array
 
-def injesting(file, address, port, batchsize=3, delimiter="\t"):
+def injesting(filepath, address, port, batchsize=3, delimiter="\t"):
     initDatabase("test", addresses=address, port=port)
     session = initConnection("test", addresses=address, port=port)
     insert_stmt = session.prepare(INSERT)
-    reader = pd.read_csv(file, chunksize=batchsize, delimiter=delimiter)
+    reader = pd.read_csv(filepath, chunksize=batchsize, delimiter=delimiter)
     #batch = BatchStatement(consistency_level=ConsistencyLevel.QUORUM, retry_policy=FallthroughRetryPolicy())
 
     total = 0
@@ -67,6 +70,7 @@ def injesting(file, address, port, batchsize=3, delimiter="\t"):
 
 def main():
     injesting(FILEPATH2, address=["35.204.192.40",], port=9042)
+    #print(getColumnNames(FILEPATH1))
     
 
 main()
