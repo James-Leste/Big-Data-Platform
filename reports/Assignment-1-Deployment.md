@@ -8,7 +8,7 @@ There are **two ways** to use the predefined Cassandra Cluster(refer to 1.1 & 1.
 
 ### 1.1 Use the deployment on Google Cloud Platform
 
-- VM instance IPv4 address: `34.32.201.110` (This maybe change overtime, if not accessiable, please contact <ziqi.wang@aalto.fi>)
+- VM instance IPv4 address: `34.32.201.110` (This maybe change overtime, if not accessiable, please contact <ziqi.wang@aalto.fi>) or refer to [my public repository](https://github.com/James-Leste/Big-Data-Platform-2024)
 - Ports
 
     ```shell
