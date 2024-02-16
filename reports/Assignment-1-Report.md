@@ -96,7 +96,6 @@ Ways to prevent SPof
 
 I plan to deploy the `datainjest` closer to tenant data source locations. Because deploying close to the data source minimizes network latency, improving ingestion speed, especially for real-time data processing needs. Reduces bandwidth requirements and costs associated with data transfer over long distances. Ideal for tenants with high volumes of local data processing and analysis requirements.
 
-
 ## Implementation
 
 ### 1. Data Schema
