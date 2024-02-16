@@ -73,7 +73,7 @@ def ingesting(filepath, address, port, batchsize=3, delimiter="\t"):
 
 def main():
     if(sys.argv[1] == "-f"):
-        ingesting(sys.argv[2], address=["35.204.192.40",], port=9042)
+        ingesting(sys.argv[2], address=["34.32.197.190",], port=9042)
     else:
         print("Command Not Found, please use -f flag with file name")
     #print(getColumnNames(FILEPATH1))
