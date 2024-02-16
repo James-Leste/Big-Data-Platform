@@ -5,6 +5,7 @@ from connector import initConnection, initDatabase
 # from cassandra.policies import FallthroughRetryPolicy
 import logging
 from cassandra.query import UNSET_VALUE
+import sys
 # from datetime import datetime
 
 FILEPATH1 = "/Users/jamesroot/AAAroot/Course notes/Aalto Big Data Platforms/assignment-1-101699682/test/amazon_reviews_us_Digital_Software_v1_00.tsv"
@@ -71,7 +72,10 @@ def ingesting(filepath, address, port, batchsize=3, delimiter="\t"):
     session.shutdown()
 
 def main():
-    ingesting(FILEPATH2, address=["35.204.192.40",], port=9042)
+    if(sys.argv[1] == "-f"):
+        ingesting(sys.argv[2], address=["35.204.192.40",], port=9042)
+    else:
+        print("Command Not Found, please use -f flag with file name")
     #print(getColumnNames(FILEPATH1))
     
 
