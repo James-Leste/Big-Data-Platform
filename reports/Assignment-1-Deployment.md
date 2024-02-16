@@ -106,6 +106,5 @@ amazon comments
 Data structure (see `data.tsv` in `/data` folder)
 
 - Change the IP address, port and keyspace in `mysimbdp-dataingest.py`
-- Change the FILEPATH into real path
-- Run `python3 mysimbdp-dataingest`
+- Run `python3 mysimbdp-dataingest -f /path/to/file`
 - You can refer to runtime log `data_ingestion_errors.log` at root directory
