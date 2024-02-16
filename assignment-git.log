@@ -1,2 +1,251 @@
-the content of this file should be the output of the log of your own git project for this assignment
-using git log command to export your git log
+commit fc67444e1d6e0af1ef0dadc9c39265d761dc30c4
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Fri Feb 16 10:40:28 2024 +0200
+
+    add command line option
+
+commit 963457ae37d5f029ed008c75fdca88ccd15bbf9b
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Fri Feb 16 10:30:40 2024 +0200
+
+    Typo fix
+
+commit 7916936c175029fc01ca0b38050e6dcd510cd2e4
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Fri Feb 16 10:30:16 2024 +0200
+
+    finish report
+
+commit 6915e0cb2d30b0a09c7a2678b78af5c97446f0ba
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Fri Feb 16 00:04:33 2024 +0200
+
+    finished Extension 4&5 in report document
+
+commit 7f770695e157f69c83a7d9a72eb847f65d74142f
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 23:50:58 2024 +0200
+
+    finished Extension 2&3 in report document
+
+commit b5fcfeadfe1a65a706a1eb2660627309ace31e54
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 23:39:42 2024 +0200
+
+    finished Implementation 5 & Extension 1 in report document
+
+commit f539efab960950a5f4f31af40487e1402869542c
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 23:20:18 2024 +0200
+
+    finished Implementation 4 in report document
+
+commit 07b33c179667885d0b7488ce7cc18d40c8fc2422
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 23:06:14 2024 +0200
+
+    finished Implementation 3 in report document
+
+commit 53fc71864c540b412d20062e89d1b0b15a8d3be6
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 22:55:23 2024 +0200
+
+    add DC2
+
+commit 0e952e14ef57880aee7471698b8048656150f4ce
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 22:55:01 2024 +0200
+
+    modify keyspace schema
+
+commit dfb8d2e9072f2c9a7c260d5ca4ce0336a6d52646
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 22:54:12 2024 +0200
+
+    finished Implementation 1-2 in report document
+
+commit a1850a824dc2eca5408cd5054a53d5e5349c0f76
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 17:01:50 2024 +0200
+
+    markdown syntax fix in Design 1. in report document
+
+commit bc8cfb7cc1d253d44fbe161588f9af4b5d8a12ed
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 16:58:24 2024 +0200
+
+    finish Design 1. in report document
+
+commit 1038b8812d87827ae0a7b2c70f30c807fbc69d37
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 15:51:30 2024 +0200
+
+    add data structure link in deployment document
+
+commit e4df0c9ae423a34963f62926fc9e4064457f5a5f
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 15:45:17 2024 +0200
+
+    deployment document v 1.0 finnished
+
+commit 98ce875854cd1cda206817864f86afdf84d47199
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 15:42:13 2024 +0200
+
+    fix typo
+
+commit f5af4fff4fa1cb9c30d85d285a042e5098885eff
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 13:35:57 2024 +0200
+
+    move  main() into boilerplate code block
+
+commit c6b61cd2b8af0a6aa247ea372d55a5eb8ccbbf1c
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 13:34:13 2024 +0200
+
+    add createKeyspace() function to avoid no-keyspace error when connecting
+
+commit 0eb7c5e6ee8f0057c979b170a7e72bd9e1017932
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 12:10:34 2024 +0200
+
+    replace NaN in raw data with UNSET_VALUE, use loop to process param inserting
+
+commit b6b2fe166b37338010d2ba8421b90f440536c638
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 12:00:26 2024 +0200
+
+    slight change to comment
+
+commit e7396313cd34895901e603f72056a112df44a5a1
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 11:57:37 2024 +0200
+
+    add missing column 'vine' in database
+
+commit 1f9e84439ce92c29f35e7223297790bafe72c44e
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 10:56:25 2024 +0200
+
+    add getColumnNames function
+
+commit 304ec9610530e2a7112eaf86eaa7592639acd259
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 10:38:31 2024 +0200
+
+    delete the original data sample(.csv), add real-case data sample file(.tsv)
+
+commit 218e0ad2f5afa0a1458a80969efb14baf5516548
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 10:35:28 2024 +0200
+
+    add README.md file in code folder
+
+commit f7f6ff4dfa3caa9380677894770694e1093c45eb
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 10:33:14 2024 +0200
+
+    delete some unnecessary lines, add some printing logs
+
+commit 02bfad22de05055b73f9de57e78c41391d4cb918
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 10:30:11 2024 +0200
+
+    update .gitignore
+
+commit 3e53dce02f6bf146d57e3da756a1664d470589c5
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 10:08:33 2024 +0200
+
+    complete datainjesting
+
+commit 9b0516383f53cb43c3ac30a7efd7cfd21e0ff684
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Thu Feb 15 09:43:41 2024 +0200
+
+    add address and port option in initDatabase
+
+commit 15dfad3e7196b3428bf953f9b7f9c3713e5063ef
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Tue Feb 13 21:59:16 2024 +0200
+
+    add logging and exception handling for AttributeError
+
+commit bedfadd2353fdbadac008b6650f5776793561736
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Tue Feb 13 21:33:14 2024 +0200
+
+    add datatype comments
+
+commit 14637b46e3f1f7674d571ad9a9f9ba46a0a03551
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Tue Feb 13 21:32:45 2024 +0200
+
+    injesting simple data successful
+
+commit 61cd87bbd4bf58f2070c06b20ff67dc8b9e408ff
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Tue Feb 13 16:21:04 2024 +0200
+
+    finish connector.py, add initDatabase()
+
+commit 7b51cf0107e4bed8b3b5585056e3dc31ce104aad
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Tue Feb 13 11:29:10 2024 +0200
+
+    complete database connection module
+
+commit 865066c7145ae651d0f5e51c028c3a593c7af115
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Tue Feb 13 00:48:28 2024 +0200
+
+    experimenting showing parts of the data
+
+commit f4e17b624bf30c0231abbeac3d058e8946f22366
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Tue Feb 13 00:47:39 2024 +0200
+
+    add connector.py, enable connection to database
+
+commit 10a114f6f426c853754f2268c05ee0d78954418d
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Tue Feb 13 00:46:45 2024 +0200
+
+    add cassandra_schema.txt
+
+commit 127416c6cd5afd883e51c6fed4c1ad4b41bfe298
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Tue Feb 13 00:46:01 2024 +0200
+
+    add reminders in cassandra-compose.yml
+
+commit 224a887e11e6a8d6068c3e36bee2aeb44aece939
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Mon Feb 12 23:13:25 2024 +0200
+
+    add requirements.txt
+
+commit 7a696741ffe4f460d755e3198a13cbb4d22e86f9
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Mon Feb 12 20:10:56 2024 +0200
+
+    update .gitignore to ignore test folder
+
+commit 45fe7965da746f4cfd8daf4ba15d3d2de6276c11
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Mon Feb 12 20:10:31 2024 +0200
+
+     configured a three-node cluster in /code/cassandra-compose.yml
+
+commit 2f101add192597e52248a6e23dec92e73d9e2664
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Mon Feb 12 18:27:13 2024 +0200
+
+    add cassandra docker compose file in /code
+
+commit 845e365cdf261e01d7d553f0c1d89a89b10254a7
+Author: Ziqi Wang <wangziqi2385823041@outlook.com>
+Date:   Mon Feb 12 17:08:22 2024 +0200
+
+    first commit
