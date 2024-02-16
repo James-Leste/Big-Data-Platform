@@ -73,7 +73,9 @@ review_body: <class 'str'>
 review_date: <class 'str'>
 ```
 
-### 2. Platform Architecture & Data Ingestion Explain
+### 2. Platform Architecture
+
+![Platform Architecture v1.0](/reports/images/architecture.jpg "Platform Architecture v1.0")
 
 ### 3. Cluster configuration
 
@@ -84,15 +86,16 @@ Ways to prevent SPof
 
 2. The configuration uses a `service_healthy` condition for `depends_on`, which is good for ensuring that dependent services wait for the Cassandra node to be fully up and healthy before starting.
 
-### 4. 
+### 4. Replication Faoctor
 
-Replication Factor: A common choice for replication factor in a production environment is three. This means each piece of data is stored on three different nodes. This level of replication provides a good balance between redundancy (for fault tolerance) and resource usage.
+- **Replication Factor:** I picked a a common choice for replication factor in a production environment: three. This means each piece of data is stored on three different nodes. This level of replication provides a good balance between redundancy (for fault tolerance) and resource usage.
 
-Number of Nodes: With a replication factor of three, at least three nodes are needed to ensure that each piece of data is stored on a different node. However, to truly safeguard against a single-point-of-failure and allow for maintenance or unexpected outages without losing data availability, it's advisable to have more than three nodes. For instance, having at least three nodes per data center if using multiple data centers would be a good start.
+- **Number of Nodes:** Due to computing resource limitation, in the implementation section I only use three nodes for in a Cassandra cluster. However, to truly safeguard against a single-point-of-failure and allow for maintenance or unexpected outages without losing data availability, Ideally having more than three nodes is better. I assume that having at least three nodes per data center should will present a better performance.
 
-Considerations for Node Failure: With a replication factor of three, the cluster can tolerate the failure of up to two nodes (in the simplest case where data is evenly distributed and no more than one replica of any data piece is on the failing nodes) before data becomes inaccessible. However, the actual tolerance to node failures can be more complex and depends on factors such as data distribution, consistency levels in use, and specific queries being executed.
+### 5. Deployment Location Choice
 
-#### 5. 
+I plan to deploy the `datainjest` closer to tenant data source locations. Because deploying close to the data source minimizes network latency, improving ingestion speed, especially for real-time data processing needs. Reduces bandwidth requirements and costs associated with data transfer over long distances. Ideal for tenants with high volumes of local data processing and analysis requirements.
+
 
 ## Implementation
 
