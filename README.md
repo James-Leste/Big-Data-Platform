@@ -1,6 +1,7 @@
 # Big Data Platform
 
-Status: Up and Running  
-Current Cassandra Cluster's IP Address: 34.32.197.190
+Status: Down
 
-Last edit: Feb 16 2024
+Current Cassandra Cluster's IP Address: To be determined
+
+Last edit: Feb 27 2024
