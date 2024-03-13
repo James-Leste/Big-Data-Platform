@@ -2,4 +2,6 @@
 /test
 */__pycache__
 data_ingestion_errors.log
-/code/test.py
+*/test.py
+selfgrading.csv
+submitter.csv
