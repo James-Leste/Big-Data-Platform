@@ -1,24 +1,32 @@
 from cassandra.cluster import Cluster
-ADDRESS = "127.0.0.1"
-PORT = 9042
+import os
+ADDRESS = os.getenv('CASSANDRA_ADDRESS', '127.0.0.1')
+PORT = int(os.getenv('CASSANDRA_PORT', 9042))
 
 def createKeyspace(session, keyspace):
-    session.execute("CREATE KEYSPACE IF NOT EXISTS "+ str(keyspace) +" \
-        WITH REPLICATION = {\
-        'class' : 'NetworkTopologyStrategy',\
-        'DC1' : 2, \
-        'DC2' : 1\
-        };")
-    print("Created keyspace: " + str(keyspace))
-    return keyspace
+    try:
+        session.execute("CREATE KEYSPACE IF NOT EXISTS "+ str(keyspace) +" \
+            WITH REPLICATION = {\
+            'class' : 'NetworkTopologyStrategy',\
+            'DC1' : 2, \
+            'DC2' : 1\
+            };")
+        print("Created keyspace: " + str(keyspace))
+        return keyspace
+    except Exception as e:
+        print(f"Failed to create keyspace {keyspace}: {e}")
+        raise
 
 def initConnection(keyspace, addresses=[ADDRESS,], port=9042):
-    cluster = Cluster(addresses, port=port)
-    print("Connecting to port " + str(port))
-    session = cluster.connect()
-    createKeyspace(session, keyspace)
-    session.set_keyspace(keyspace)
-    print("Connected successfully !")
+    try:
+        cluster = Cluster(addresses, port=port)
+        print(f"Connecting to {addresses}:{str(port)}")
+        session = cluster.connect()
+        createKeyspace(session, keyspace)
+        session.set_keyspace(keyspace)
+        print("Connected successfully !")
+    except Exception as e:
+        print(f"Failed to initialize connection: {e}")
     return session
 
 
@@ -36,7 +44,7 @@ def initConnection(keyspace, addresses=[ADDRESS,], port=9042):
 # review_headline: <class 'str'>
 # review_body:<class 'str'>
 # review_date:<class 'str'>
-def initDatabase(keyspace="amazon", addresses=ADDRESS, port=PORT):
+def initDatabase(keyspace, addresses=ADDRESS, port=PORT):
     session = initConnection(keyspace, addresses, port=port)
     session.execute("CREATE TABLE IF NOT EXISTS reviews_by_id (\
         marketplace text,\
@@ -61,7 +69,7 @@ def initDatabase(keyspace="amazon", addresses=ADDRESS, port=PORT):
     return keyspace
 
 def main():
-    print(initConnection(keyspace="test", addresses=["34.32.201.110",], port=9042))
+    print(initConnection(keyspace="test"))
     
 if __name__ == "__main__":
     main()

@@ -8,8 +8,6 @@ from cassandra.query import UNSET_VALUE
 import sys
 # from datetime import datetime
 
-FILEPATH1 = "/Users/jamesroot/AAAroot/Course notes/Aalto Big Data Platforms/assignment-1-101699682/test/amazon_reviews_us_Digital_Software_v1_00.tsv"
-FILEPATH2 = "/Users/jamesroot/AAAroot/Course notes/Aalto Big Data Platforms/assignment-1-101699682/test/amazon_reviews_us_Gift_Card_v1_00.tsv"
 TESTFILEPATH = "/Users/jamesroot/AAAroot/Course notes/Aalto Big Data Platforms/assignment-1-101699682/test/test.tsv"
 
 INSERT = "INSERT INTO reviews_by_id \
@@ -45,7 +43,6 @@ def ingesting(filepath, address, port, batchsize=3, delimiter="\t"):
                     for n in columns:
                         paraList.append(UNSET_VALUE) if str(s.get(n)) == "nan"\
                             else paraList.append(s.get(n))
-                        
                     session.execute_async(insert_stmt, paraList)
                     total += 1
                 except AttributeError as e:
@@ -73,7 +70,7 @@ def ingesting(filepath, address, port, batchsize=3, delimiter="\t"):
 
 def main():
     if(sys.argv[1] == "-f"):
-        ingesting(sys.argv[2], address=["34.32.197.190",], port=9042)
+        ingesting(sys.argv[2], address=["127.0.0.1",], port=9042)
     else:
         print("Command Not Found, please use -f flag with file name")
     #print(getColumnNames(FILEPATH1))
