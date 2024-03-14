@@ -4,7 +4,7 @@ from cassandra.cluster import Cluster
 import logging
 import pandas as pd
 from cassandra.query import UNSET_VALUE
-from tqdm import tqdm
+import datetime
 
 INSERT = "INSERT INTO reviews_by_id \
         (marketplace, customer_id, review_id, \
@@ -120,6 +120,9 @@ def ingesting(filepath, address, port, batchsize=3, delimiter="\t"):
     reader = pd.read_csv(filepath, chunksize=batchsize, delimiter=delimiter)
     #batch = BatchStatement(consistency_level=ConsistencyLevel.QUORUM, retry_policy=FallthroughRetryPolicy())
     total = 0
+    failed = 0
+    start_time = datetime.datetime.now()
+    print(f"Ingestion started at {start_time}")
     try:
         while True:
             df = next(reader)
@@ -132,12 +135,12 @@ def ingesting(filepath, address, port, batchsize=3, delimiter="\t"):
                     future = session.execute_async(insert_stmt, paraList)
                     try:
                         results = future.result()
-                        print(results)
                         total += 1
                     except Exception:
+                        failed += 1
                         print("Operation failed:")
                     finally:
-                        print(total)
+                        print(f'Success:{total}; Failed: {failed}')
                 except AttributeError as e:
                     # Log the error and the problematic row for review
                     logging.error(f"Error processing row {i}: {e}")
@@ -155,6 +158,9 @@ def ingesting(filepath, address, port, batchsize=3, delimiter="\t"):
         print("Reached end of file.")
         print("-----------------")
     finally:
+        end_time = datetime.datetime.now()
+        ingestion_time = end_time - start_time
+        print(f"Total ingestion time: {ingestion_time}")
         logging.info(f"Total {total} records added successfully.")
         logging.info("-----------------")
         print(f"Total {total} records added successfully.")
