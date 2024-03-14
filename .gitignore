@@ -1,7 +1,7 @@
 .DS_Store
-/test
-*/__pycache__
-data_ingestion_errors.log
-*/test.py
-selfgrading.csv
-submitter.csv
+**/test
+**/__pycache__/
+**/data_ingestion_errors.log
+**/test.py
+*.csv
+**/.vscode

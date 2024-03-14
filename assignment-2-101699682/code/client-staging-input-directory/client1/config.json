@@ -1,0 +1,5 @@
+{
+    "file_types": ["csv", "tsv", "txt"],
+    "max_file_size": 1024,
+    "batch_size": 30
+}
