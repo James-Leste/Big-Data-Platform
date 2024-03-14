@@ -123,49 +123,53 @@ def ingesting(filepath, address, port, batchsize=3, delimiter="\t"):
     failed = 0
     start_time = datetime.datetime.now()
     print(f"Ingestion started at {start_time}")
-    try:
-        while True:
+    
+    while True:
+        try:
             df = next(reader)
-            for i, s in df.iterrows():
+        except StopIteration:
+            logging.info("Reached end of file.")
+            logging.info("-----------------")
+            print("Reached end of file.")
+            print("-----------------")
+            break
+        for i, s in df.iterrows():
+            try:
+                paraList = []
+                for n in columns:
+                    paraList.append(UNSET_VALUE) if str(s.get(n)) == "nan"\
+                        else paraList.append(s.get(n))
+                future = session.execute_async(insert_stmt, paraList)
                 try:
-                    paraList = []
-                    for n in columns:
-                        paraList.append(UNSET_VALUE) if str(s.get(n)) == "nan"\
-                            else paraList.append(s.get(n))
-                    future = session.execute_async(insert_stmt, paraList)
-                    try:
-                        results = future.result()
-                        total += 1
-                    except Exception:
-                        failed += 1
-                        print("Operation failed:")
-                    finally:
-                        print(f'Success:{total}; Failed: {failed}')
-                except AttributeError as e:
-                    # Log the error and the problematic row for review
-                    logging.error(f"Error processing row {i}: {e}")
-                    logging.error(f"Problematic data: {s.to_dict()}")
-                    logging.info("-----------------")
-                    continue  # Skip the current row and continue with the next one
-                except TypeError as e:
-                    logging.error(f"Error processing row {i}: {e}")
-                    logging.error(f"Problematic data: {s.to_dict()}")
-                    logging.info("-----------------")
-                    continue  # Skip the current row and continue with the next one
-    except StopIteration:
-        logging.info("Reached end of file.")
-        logging.info("-----------------")
-        print("Reached end of file.")
-        print("-----------------")
-    finally:
-        end_time = datetime.datetime.now()
-        ingestion_time = end_time - start_time
-        print(f"Total ingestion time: {ingestion_time}")
-        logging.info(f"Total {total} records added successfully.")
-        logging.info("-----------------")
-        print(f"Total {total} records added successfully.")
-        print("-----------------")
-    session.shutdown()
+                    results = future.result()
+                    total += 1
+                except Exception:
+                    failed += 1
+                    print("Operation failed:")
+                finally:
+                    print(f'Success:{total}; Failed: {failed}')
+            except AttributeError as e:
+                # Log the error and the problematic row for review
+                logging.error(f"Error processing row {i}: {e}")
+                logging.error(f"Problematic data: {s.to_dict()}")
+                logging.info("-----------------")
+                continue  # Skip the current row and continue with the next one
+            except TypeError as e:
+                logging.error(f"Error processing row {i}: {e}")
+                logging.error(f"Problematic data: {s.to_dict()}")
+                logging.info("-----------------")
+                continue  # Skip the current row and continue with the next one
+    end_time = datetime.datetime.now()
+    ingestion_time = end_time - start_time
+    print(f"Total ingestion time: {ingestion_time}")
+    logging.info(f"Total {total} records added successfully.")
+    logging.info("-----------------")
+    print(f"Total {total} records added successfully.")
+    print("-----------------")
+    try:
+        session.shutdown()
+    except RuntimeError as e:
+        print(e)
 
 def main(): 
     args = parse_params()
